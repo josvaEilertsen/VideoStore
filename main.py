@@ -1,6 +1,7 @@
 import sqlite3
 import time
 import os
+from datetime import datetime #Fixes (module 'datetime' has no attribute 'now')
 
 #Global Varibles
 user_cred = {} 
@@ -11,7 +12,9 @@ def main():
     time.sleep(1) #tends to give the user the feeling that its doing something 
 
     #Call to get credidentails
-    load_usrs()
+    #load_usrs()
+
+    dashboard() #TEMP!!!!!
 
 def load_usrs():
     print("Loading users....")
@@ -119,7 +122,7 @@ def add_client():
     address1 = input("Address Line 1: ")
     city = input("City/town: ")
     province = input("Province: ")
-    postcode = input("PostalCode")
+    postcode = input("PostalCode: ")
 
     #Chuck it into the database
     conn = sqlite3.connect("video_store.db")
@@ -142,7 +145,31 @@ def add_movie():
     os.system('cls')
     print("Lets add a new movie")
 
+    videoVer = input("Video Vertion: ")
+    vname = input("Video Name: ")
+    typ = input("Type: ") #Vairible named typ due to type being reserved
     
+    #Date (Formatted Year, Month, Day)
+    print("Getting date....")
+    time.sleep(0.4)
+    now = datetime.now()
+    date_string = now.strftime("%Y-%m-%d") #Convert to string before insert
+
+    #Chuck it into the database
+    conn = sqlite3.connect("video_store.db")
+    cursor = conn.cursor()
+
+    cursor.execute(f"""
+        INSERT INTO tblVideos (videoVer, vname, type, dateAdded)
+        VALUES ('{videoVer}', '{vname}', '{typ}', '{date_string}')
+    """)
+
+    conn.commit()
+    conn.close()
+
+    print("Done")
+    dashboard()
+    os.system('cls') 
 
 #Main method runner
 if __name__ == "__main__":
