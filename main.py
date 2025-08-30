@@ -1,5 +1,6 @@
 import sqlite3
 import time
+import os
 
 #Global Varibles
 user_cred = {} 
@@ -43,6 +44,7 @@ def usr_login():
     checker = 0 #Will be set to 1 if login successful to break loop
     
     while(checker != 1):
+        os.system('cls') #Clears terminal
         usrName = input("Enter your username and press enter ")
         usrPass = input("Enter you password and press enter ")
 
@@ -50,6 +52,7 @@ def usr_login():
         if user_cred.get(usrName) == usrPass:
             print("Success, Thank you")
             checker = 1
+            os.system('cls') #Clears terminal
             dashboard() #Run the dashbaord
         else:
             print("Invalid Credentails")
@@ -74,37 +77,69 @@ def dashboard():
     usrChoice = input("Choice: ")
 
     if usrChoice == "1":
-        print("Add new client selected.")
-        # Call add client function here
-        # add_client()
-        dashboard()
+        add_client()
+
     elif usrChoice == "2":
         print("Add new movie selected.")
         # Call add new movie function here
         # add_movie()
         dashboard()
+
     elif usrChoice == "3":
         print("Hire out movie selected.")
         # Call hire out movie function here
         # hire_movie()
         dashboard()
+
     elif usrChoice == "4":
         print("Return movie selected.")
         # Call return movie function here
         # return_movie()
         dashboard()
+
     elif usrChoice == "5":
         print("Byeeeeee")
         time.sleep(1)
         main()
+
     elif usrChoice.upper() == "X": #.uppercase to ensure that "x" and "X" result in the program closing
         print("Byeeeeee")
         time.sleep(1)
         exit()
+
     else:
         print("Invalid input!")
         dashboard()
     
+def add_client():
+    os.system('cls') #Clears terminal
+    print("Lets add a new client")
+    
+    #Collect all data
+    fName = input("First Name: ")
+    sName = input("Surname: ")
+    phone = input("Phone: ")
+    address1 = input("Address Line 1: ")
+    city = input("City/town: ")
+    province = input("Province: ")
+    postcode = input("PostalCode")
+
+    #Chuck it into the database
+    conn = sqlite3.connect("video_store.db")
+    cursor = conn.cursor()
+
+    cursor.execute(f"""
+        INSERT INTO tblCustomers (fName, sName, phone, address1, city, province, postcode)
+        VALUES ('{fName}', '{sName}', '{phone}', '{address1}', '{city}', '{province}', '{postcode}')
+    """)
+
+    conn.commit()
+    conn.close()
+
+    print("Client has been added")
+    time.sleep(1)
+    os.system('cls')
+    dashboard()
 
 #Main method runner
 if __name__ == "__main__":
