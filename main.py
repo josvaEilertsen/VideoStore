@@ -80,10 +80,7 @@ def dashboard():
         add_client()
 
     elif usrChoice == "2":
-        print("Add new movie selected.")
-        # Call add new movie function here
-        # add_movie()
-        dashboard()
+        add_movie()
 
     elif usrChoice == "3":
         print("Hire out movie selected.")
@@ -140,6 +137,12 @@ def add_client():
     time.sleep(1)
     os.system('cls')
     dashboard()
+
+def add_movie():
+    os.system('cls')
+    print("Lets add a new movie")
+
+    
 
 #Main method runner
 if __name__ == "__main__":
