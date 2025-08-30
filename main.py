@@ -74,6 +74,7 @@ def dashboard():
     print("3. Hire out movie")
     print("4. Return movie")
     print("5. List Hired Movies")
+    print("6. Add new user")
     print("=====================================")
     print("9. Log-Out")
     print("X Close")
@@ -94,6 +95,9 @@ def dashboard():
 
     elif usrChoice == "5":
         lst_hired()
+
+    elif usrChoice == "6":
+        add_User()
 
     elif usrChoice == "9":
         print("Byeeeeee")
@@ -214,6 +218,31 @@ def return_movie():
     os.system('cls')
     print("Return Movie")
 
+    hireID = input("What is the hire ID for the return?: ")
+
+    #Date stuff
+    print("Getting date....")
+    time.sleep(0.4)
+    now = datetime.now()
+    date_string = now.strftime("%Y-%m-%d") #Convert to string before insert
+
+    #Insert
+    conn = sqlite3.connect("video_store.db")
+    cursor = conn.cursor()
+
+    cursor.execute(f"""
+        UPDATE tblHire
+        SET dateReturn = '{date_string}'
+        WHERE hireID = '{hireID}'
+    """)
+
+    conn.commit()
+    conn.close()
+
+    print("Movie has been returned")
+    time.sleep(0.5)
+    dashboard()
+
 def lst_hired():
     print("List Hired Movies")
 
@@ -224,7 +253,7 @@ def lst_hired():
         SELECT hireID, videoID, custID, dateHired
         FROM tblHire
         WHERE dateReturn IS NULL
-    """)
+    """) #if it hasnt been returned, it is currently rented out or lost
 
     rows = cursor.fetchall()
     conn.close()
@@ -238,6 +267,27 @@ def lst_hired():
         dashboard()
     else:
         print("Invalid!")
+
+def add_User():
+    print("Lets add a new user")
+
+    usrname = input("Username: ")
+    password = input("Password: ")
+
+    #Chuck it into the database
+    conn = sqlite3.connect("video_store.db")
+    cursor = conn.cursor()
+
+    cursor.execute(f"""
+        INSERT INTO tblUsers (usrname, password)
+        VALUES ('{usrname}', '{password}')
+    """)
+
+    conn.commit()
+    conn.close()
+
+    print("User has been added")
+    dashboard()
 
 #Main method runner
 if __name__ == "__main__":
