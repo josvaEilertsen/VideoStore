@@ -145,7 +145,20 @@ def add_movie():
 
     videoVer = input("Video Vertion: ")
     vname = input("Video Name: ")
-    typ = input("Type: ") #Vairible named typ due to type being reserved
+    
+    #Validate data
+    checker = 0 #Will be 1 if it passes
+    while(checker != 1):
+        typ = input("Type: R or B ") #Vairible named typ due to type being reserved
+        typ = typ.upper #To upper case
+        
+        if(typ == "R"):
+            checker = 1
+        elif(typ == "B"):
+            checker = 1
+        else:
+            print("Invalid data!")
+            #checker remains at 0
     
     #Date (Formatted Year, Month, Day)
     print("Getting date....")
