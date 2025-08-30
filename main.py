@@ -86,16 +86,10 @@ def dashboard():
         add_movie()
 
     elif usrChoice == "3":
-        print("Hire out movie selected.")
-        # Call hire out movie function here
-        # hire_movie()
-        dashboard()
+        hire_movie()
 
     elif usrChoice == "4":
-        print("Return movie selected.")
-        # Call return movie function here
-        # return_movie()
-        dashboard()
+        return_movie()
 
     elif usrChoice == "5":
         print("Byeeeeee")
@@ -170,6 +164,38 @@ def add_movie():
     print("Done")
     dashboard()
     os.system('cls') 
+
+def hire_movie():
+    print("Hire out a movie")
+
+    videoID = input("VideoID: ") 
+    custID = input("Customer ID: ")
+    
+    #Date stuff
+    print("Getting date....")
+    time.sleep(0.4)
+    now = datetime.now()
+    date_string = now.strftime("%Y-%m-%d") #Convert to string before insert
+
+    #Insert
+    conn = sqlite3.connect("video_store.db")
+    cursor = conn.cursor()
+
+    cursor.execute(f"""
+        INSERT INTO tblHire (custID, videoID, dateHired)
+        VALUES ('{custID}', '{videoID}', '{date_string}')
+    """)
+
+    conn.commit()
+    conn.close()
+
+    print("Done")
+    time.sleep(0.5)
+    dashboard()
+
+def return_movie():
+    os.system('cls')
+    print("Return Movie")
 
 #Main method runner
 if __name__ == "__main__":
