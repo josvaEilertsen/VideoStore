@@ -8,15 +8,15 @@ user_cred = {}
 
 #main method
 def main():
+    os.system('cls')
     print("Program running...")
     time.sleep(1) #tends to give the user the feeling that its doing something 
 
     #Call to get credidentails
-    #load_usrs()
-
-    dashboard() #TEMP!!!!!
+    load_usrs()
 
 def load_usrs():
+    os.system('cls')
     print("Loading users....")
     time.sleep(1) #tends to give the user the feeling that its doing something 
 
@@ -38,6 +38,7 @@ def load_usrs():
 
 #Start usr login
 def usr_login():
+    os.system('cls')
     print("Running login...")
     time.sleep(1) #tends to give the user the feeling that its doing something 
 
@@ -62,6 +63,7 @@ def usr_login():
             #checker remains 0
 
 def dashboard():
+    os.system('cls')
     print("Dashboard Running...")
     time.sleep(1) #tends to give the user the feeling that its doing something 
 
@@ -187,6 +189,7 @@ def add_movie():
     os.system('cls') 
 
 def hire_movie():
+    os.system('cls')
     print("Hire out a movie")
 
     videoID = input("VideoID: ") 
@@ -244,6 +247,7 @@ def return_movie():
     dashboard()
 
 def lst_hired():
+    os.system('cls')
     print("List Hired Movies")
 
     conn = sqlite3.connect("video_store.db")
@@ -269,6 +273,7 @@ def lst_hired():
         print("Invalid!")
 
 def add_User():
+    os.system('cls')
     print("Lets add a new user")
 
     usrname = input("Username: ")
