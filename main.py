@@ -1,4 +1,5 @@
 import sqlite3
+import time
 
 #Global Varibles
 user_cred = {} 
@@ -6,12 +7,14 @@ user_cred = {}
 #main method
 def main():
     print("Program running...")
+    time.sleep(1) #tends to give the user the feeling that its doing something 
 
     #Call to get credidentails
     load_usrs()
 
 def load_usrs():
     print("Loading users....")
+    time.sleep(1) #tends to give the user the feeling that its doing something 
 
     #SQLite connection & read in
     conn = sqlite3.connect("video_store.db")
@@ -32,6 +35,7 @@ def load_usrs():
 #Start usr login
 def usr_login():
     print("Running login...")
+    time.sleep(1) #tends to give the user the feeling that its doing something 
 
     #Bring in the dictionary
     global user_cred
@@ -46,10 +50,61 @@ def usr_login():
         if user_cred.get(usrName) == usrPass:
             print("Success, Thank you")
             checker = 1
+            dashboard() #Run the dashbaord
         else:
             print("Invalid Credentails")
             #checker remains 0
 
+def dashboard():
+    print("Dashboard Running...")
+    time.sleep(1) #tends to give the user the feeling that its doing something 
+
+    #Start drawing up the dash
+    print("=====================================")
+    print("VIDEO STORE DASHBOARD")
+    print("=====================================")
+    print("1. Add new client")
+    print("2. Add new movie")
+    print("3. Hire out movie")
+    print("4. Return movie")
+    print("=====================================")
+    print("5. Log-Out")
+    print("X Close")
+    print("=====================================")
+    usrChoice = input("Choice: ")
+
+    if usrChoice == "1":
+        print("Add new client selected.")
+        # Call add client function here
+        # add_client()
+        dashboard()
+    elif usrChoice == "2":
+        print("Add new movie selected.")
+        # Call add new movie function here
+        # add_movie()
+        dashboard()
+    elif usrChoice == "3":
+        print("Hire out movie selected.")
+        # Call hire out movie function here
+        # hire_movie()
+        dashboard()
+    elif usrChoice == "4":
+        print("Return movie selected.")
+        # Call return movie function here
+        # return_movie()
+        dashboard()
+    elif usrChoice == "5":
+        print("Byeeeeee")
+        time.sleep(1)
+        main()
+    elif usrChoice.upper() == "X": #.uppercase to ensure that "x" and "X" result in the program closing
+        print("Byeeeeee")
+        time.sleep(1)
+        exit()
+    else:
+        print("Invalid input!")
+        dashboard()
+    
 
 #Main method runner
 if __name__ == "__main__":
