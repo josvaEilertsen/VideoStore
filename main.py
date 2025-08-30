@@ -73,8 +73,9 @@ def dashboard():
     print("2. Add new movie")
     print("3. Hire out movie")
     print("4. Return movie")
+    print("5. List Hired Movies")
     print("=====================================")
-    print("5. Log-Out")
+    print("9. Log-Out")
     print("X Close")
     print("=====================================")
     usrChoice = input("Choice: ")
@@ -92,6 +93,9 @@ def dashboard():
         return_movie()
 
     elif usrChoice == "5":
+        lst_hired()
+
+    elif usrChoice == "9":
         print("Byeeeeee")
         time.sleep(1)
         main()
@@ -197,7 +201,31 @@ def return_movie():
     os.system('cls')
     print("Return Movie")
 
+def lst_hired():
+    print("List Hired Movies")
+
+    conn = sqlite3.connect("video_store.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT hireID, videoID, custID, dateHired
+        FROM tblHire
+        WHERE dateReturn IS NULL
+    """)
+
+    rows = cursor.fetchall()
+    conn.close()
+
+    for row in rows:
+        hire_id, movie_id, user_id, date_hired = row
+        print(f"HireID: {hire_id}, MovieID: {movie_id}, UserID: {user_id}, Hired on: {date_hired}")
+
+    back = input("Type x to return")
+    if(back == "x"):
+        dashboard()
+    else:
+        print("Invalid!")
+
 #Main method runner
 if __name__ == "__main__":
     main()
-
